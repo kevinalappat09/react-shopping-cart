@@ -107,7 +107,7 @@ const Router = () => {
         },
         {
             path : "cart/",
-            element : <Cart />
+            element : <Cart cart={cart}/>
         },
         {
             path : "wishlist/",

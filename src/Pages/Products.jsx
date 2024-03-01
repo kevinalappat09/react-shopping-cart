@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import ProductSpecification from "./ProductSpecification";
 
+import Nav from "../Nav";
+
 const Products = ({products, addToCart, addToWishlist}) => {
     const [currentProducts, setCurrentProducts] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
@@ -128,6 +130,8 @@ const Products = ({products, addToCart, addToWishlist}) => {
 
     return (
         <div className="products">
+            <Nav />
+
             <button onClick={switchMensClothingFilter}>Add mens clothing filter</button>
             <button onClick={switchWomensClothingFitler}>Add womens clothing filter</button>
             <button onClick={switchJewelleryFilter}>Add jewellery filter</button>
