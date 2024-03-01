@@ -1,9 +1,18 @@
 import PropTypes from "prop-types"
 import Nav from "../Nav";
+import { useEffect, useState } from "react";
 
 const Cart = ({cart, removeFromCart, changeQuantityInCart, cartCount, wishlistCount}) => {
 
-    console.log(cart);
+    const [cartTotal, setCartTotal] = useState(0);
+
+    useEffect(() => {
+        const cartValue = cart.reduce((accumulator, cartItem) => {return accumulator + (cartItem.price * cartItem.quantity)}, 0);
+        const roundedCartTotal = cartValue.toFixed(2);
+        setCartTotal(roundedCartTotal);
+
+    }, [cart])
+
     return (
         <div className="cart">
             <Nav cartCount={cartCount} wishlistCount={wishlistCount}/>
@@ -17,6 +26,9 @@ const Cart = ({cart, removeFromCart, changeQuantityInCart, cartCount, wishlistCo
                     <button onClick={() => removeFromCart(cartItem)}>Remove From Cart</button>
                 </div>
             ))}
+            <div>
+                cart Total {cartTotal}
+            </div>
         </div>
     );
 }
