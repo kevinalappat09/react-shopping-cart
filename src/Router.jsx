@@ -13,12 +13,17 @@ const Router = () => {
     const [loading, setLoading] = useState(true);
 
     const [cart, setCart] = useState([]);
+
     const [wishlist, setWishlist] = useState([]);
 
-    const changeQuantityInCart = (itemID, quantity) => {
+    const changeQuantityInCart = (itemID, quantityChange) => {
         const getItemByID = cart.find(item => item.id === itemID);
         if(!getItemByID) {
             console.log("Item not found in cart");
+            return;
+        }
+        if(getItemByID.quantity === 1 && quantityChange === -1) {
+            removeFromCart(getItemByID);
             return;
         }
         const newItem = {
@@ -27,7 +32,7 @@ const Router = () => {
             "description" : getItemByID.description,
             "price" : getItemByID.price,
             "imageURL" : getItemByID.imageURL,
-            "quantity" : quantity
+            "quantity" : getItemByID.quantity + quantityChange
         };
         const newCart = cart.filter(item => item.id !== itemID);
         newCart.push(newItem);
@@ -38,7 +43,7 @@ const Router = () => {
     const addToCart = (item) => {
         const checkItem = cart.find(cartElement => cartElement.id === item.id);
         if(checkItem) {
-            changeQuantityInCart(checkItem.id, checkItem.quantity+1);
+            changeQuantityInCart(checkItem.id, 1);
         } else {
             const itemToAdd = {
                 "id" : item.id,
@@ -51,7 +56,16 @@ const Router = () => {
 
             setCart(prevItems => [...prevItems, itemToAdd]);
         }
-        console.log(cart);
+    }
+
+    const removeFromCart = (item) => {
+        const getRemoveElement = cart.find(element => element.id === item.id);
+        if(getRemoveElement) {
+            const newCart = cart.filter(element => element.id !== getRemoveElement.id);
+            setCart([...newCart]);
+        } else {
+            console.log("Element does not exist in cart");
+        }
     }
 
     const addToWishlist = (item) => {
@@ -107,7 +121,7 @@ const Router = () => {
         },
         {
             path : "cart/",
-            element : <Cart cart={cart}/>
+            element : <Cart cart={cart} removeFromCart={removeFromCart} changeQuantityInCart={changeQuantityInCart}/>
         },
         {
             path : "wishlist/",
