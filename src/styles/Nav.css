@@ -1,0 +1,30 @@
+nav {
+    display: flex;
+    
+    justify-content: space-between;
+    align-items: center;
+
+    border-bottom: 1px solid var(--accent);
+
+    padding: 1rem;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: var(--accent);
+
+    font-weight: 800;
+    text-transform: uppercase;
+
+    transition: 300ms;
+}
+
+.nav-link::hover {
+    transform: translateY(2);
+}
+
+.nav-right {
+    width: 40%;
+    display: flex;
+    justify-content: space-between;
+}

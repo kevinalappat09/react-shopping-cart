@@ -4,6 +4,8 @@ import ProductSpecification from "./ProductSpecification";
 
 import Nav from "../Nav";
 
+import "../styles/Products.css"
+
 const Products = ({products, addToCart, addToWishlist, cartCount, wishlistCount}) => {
     const [currentProducts, setCurrentProducts] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
@@ -129,33 +131,46 @@ const Products = ({products, addToCart, addToWishlist, cartCount, wishlistCount}
     }, [mensClothingFilter, womensClothingFilter, jewelleryFilter, electronicsFilter, sort, products, currentPage, productsPerPage]);
 
     return (
-        <div className="products">
-            <Nav cartCount={cartCount} wishlistCount={wishlistCount}/>
+        <>
+            <Nav cartCount={cartCount} wishlistCount={wishlistCount}/>  
+            <main className="products">
+                <div className="sidebar">
 
-            <button onClick={switchMensClothingFilter}>Add mens clothing filter</button>
-            <button onClick={switchWomensClothingFitler}>Add womens clothing filter</button>
-            <button onClick={switchJewelleryFilter}>Add jewellery filter</button>
-            <button onClick={switchElectronicsFilter}>Add electronics filter</button>
-            <button onClick={switchSortHighToLow}>Add sort high to low</button>
-            <button onClick={switchSortLowToHigh}>Add sort low to high</button>
-
-            <ProductSpecification product={productToSpecify} modalOpen={productSpecificationModalOpen} setModalClose={closeProduct}/> 
-
-            {currentProducts.map(element => (
-                <div key={element.id}> 
-                    Name : {element.title} ||
-                    Category : {element.category} ||
-                    Price : {element.price} ||
-                    <button onClick={() => addToCart(element)}>Add to cart</button>
-                    <button onClick={() => addToWishlist(element)}>Add to wishlist</button>
-                    <button onClick={() => openProduct(element)}>Get details</button>
                 </div>
-            ))}
+                <div className="top-filter-tray">
 
-            <button onClick={prevPage} disabled={currentPage === 1}>Previous Page</button>
-            <button onClick={nextPage} disabled={currentPage * productsPerPage > maxProducts-1}>Next Page</button>
-            
-        </div>
+                </div>
+                <div className="product-display-container">
+
+                </div>
+
+                
+
+                <button onClick={switchMensClothingFilter}>Add mens clothing filter</button>
+                <button onClick={switchWomensClothingFitler}>Add womens clothing filter</button>
+                <button onClick={switchJewelleryFilter}>Add jewellery filter</button>
+                <button onClick={switchElectronicsFilter}>Add electronics filter</button>
+                <button onClick={switchSortHighToLow}>Add sort high to low</button>
+                <button onClick={switchSortLowToHigh}>Add sort low to high</button>
+
+                <ProductSpecification product={productToSpecify} modalOpen={productSpecificationModalOpen} setModalClose={closeProduct}/> 
+
+                {currentProducts.map(element => (
+                    <div key={element.id}> 
+                        Name : {element.title} ||
+                        Category : {element.category} ||
+                        Price : {element.price} ||
+                        <button onClick={() => addToCart(element)}>Add to cart</button>
+                        <button onClick={() => addToWishlist(element)}>Add to wishlist</button>
+                        <button onClick={() => openProduct(element)}>Get details</button>
+                    </div>
+                ))}
+
+                <button onClick={prevPage} disabled={currentPage === 1}>Previous Page</button>
+                <button onClick={nextPage} disabled={currentPage * productsPerPage > maxProducts-1}>Next Page</button>
+                
+            </main>
+        </>
     );
 }
 
