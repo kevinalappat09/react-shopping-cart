@@ -84,6 +84,16 @@ const Router = () => {
         setWishlist(prevItems => [...prevItems, newWishlistItem]);
     }
 
+    const removeFromWishlist = (itemID) => {
+        const checkItemExists = wishlist.find(wishlistELement => wishlistELement.id === itemID);
+        if(checkItemExists) {
+            const newWishlist = wishlist.filter(element => element.id !== checkItemExists.id);
+            setWishlist([...newWishlist]);
+        } else {
+            console.log("Element is not there in the wishlist");
+        }
+    }
+
     useEffect(() => {
         let isMounted = true;
         const fetchData = async () => {
@@ -125,7 +135,7 @@ const Router = () => {
         },
         {
             path : "wishlist/",
-            element : <Wishlist />
+            element : <Wishlist wishlist={wishlist} removeFromWishlist={removeFromWishlist}/>
         }
     ]);
 

@@ -6,6 +6,7 @@ const Nav = () => {
         <nav>
             <Link to={"/products"}>Products</Link>
             <Link to={"/cart"}>Cart</Link>
+            <Link to={"/wishlist"}>Wishlist</Link>
         </nav>
     )
 }
