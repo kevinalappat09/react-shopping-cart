@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import ProductSpecification from "./ProductSpecification";
 
-const Products = ({products}) => {
+const Products = ({products, addToCart, addToWishlist}) => {
     const [currentProducts, setCurrentProducts] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [productsPerPage] = useState(5);
@@ -14,6 +15,9 @@ const Products = ({products}) => {
     const [electronicsFilter, setElectronicsFilter] = useState(false);
 
     const [sort, setSort] = useState(0);
+
+    const [productSpecificationModalOpen, setProductSpecificationModalOpen] = useState(false);
+    const [productToSpecify, setProductToSpecify] = useState({});
 
     const switchMensClothingFilter = () => {
         setMensClothingFilter(!mensClothingFilter);
@@ -53,6 +57,16 @@ const Products = ({products}) => {
 
     const nextPage = () => {
         setCurrentPage(currentPage => currentPage+1);
+    }
+
+    // opens the product specification modal with the required product
+    const openProduct = (product) => {
+        setProductToSpecify(product);
+        setProductSpecificationModalOpen(true);
+    }
+
+    const closeProduct = () => {
+        setProductSpecificationModalOpen(false);
     }
 
     useEffect(() => {
@@ -112,7 +126,6 @@ const Products = ({products}) => {
         }
     }, [mensClothingFilter, womensClothingFilter, jewelleryFilter, electronicsFilter, sort, products, currentPage, productsPerPage]);
 
-
     return (
         <div className="products">
             <button onClick={switchMensClothingFilter}>Add mens clothing filter</button>
@@ -122,16 +135,22 @@ const Products = ({products}) => {
             <button onClick={switchSortHighToLow}>Add sort high to low</button>
             <button onClick={switchSortLowToHigh}>Add sort low to high</button>
 
+            <ProductSpecification product={productToSpecify} modalOpen={productSpecificationModalOpen} setModalClose={closeProduct}/> 
+
             {currentProducts.map(element => (
                 <div key={element.id}> 
                     Name : {element.title} ||
                     Category : {element.category} ||
-                    Price : {element.price}
+                    Price : {element.price} ||
+                    <button onClick={() => addToCart(element)}>Add to cart</button>
+                    <button onClick={() => addToWishlist(element)}>Add to wishlist</button>
+                    <button onClick={() => openProduct(element)}>Get details</button>
                 </div>
             ))}
 
             <button onClick={prevPage} disabled={currentPage === 1}>Previous Page</button>
             <button onClick={nextPage} disabled={currentPage * productsPerPage > maxProducts-1}>Next Page</button>
+            
         </div>
     );
 }
@@ -139,5 +158,7 @@ const Products = ({products}) => {
 export default Products;
 
 Products.propTypes = {
-    products : PropTypes.array
+    products : PropTypes.array,
+    addToCart : PropTypes.func,
+    addToWishlist : PropTypes.func
 };
