@@ -5,6 +5,7 @@ import Products from "./Pages/Products";
 import Cart from "./Pages/Cart";
 import Wishlist from "./Pages/Wishlist";
 import ErrorElement from "./Pages/ErrorElement";
+import Nav from "./Nav";
 
 import { useEffect, useState } from "react";
 
@@ -13,8 +14,10 @@ const Router = () => {
     const [loading, setLoading] = useState(true);
 
     const [cart, setCart] = useState([]);
+    const [cartCount, setCartCount] = useState(0);
 
     const [wishlist, setWishlist] = useState([]);
+    const [wishlistCount, setWishlistCount] = useState(0);
 
     const changeQuantityInCart = (itemID, quantityChange) => {
         const getItemByID = cart.find(item => item.id === itemID);
@@ -53,7 +56,7 @@ const Router = () => {
                 "imageURL" : item.image,
                 "quantity" : 1
             };
-
+            setCartCount(prevCartCount => prevCartCount+1);
             setCart(prevItems => [...prevItems, itemToAdd]);
         }
     }
@@ -62,6 +65,7 @@ const Router = () => {
         const getRemoveElement = cart.find(element => element.id === item.id);
         if(getRemoveElement) {
             const newCart = cart.filter(element => element.id !== getRemoveElement.id);
+            setCartCount(prevCartCount => prevCartCount-1);
             setCart([...newCart]);
         } else {
             console.log("Element does not exist in cart");
@@ -81,6 +85,7 @@ const Router = () => {
             "price" : item.price,
             "imageURL" : item.image
         }
+        setWishlistCount(prevWishlistCount => prevWishlistCount + 1);
         setWishlist(prevItems => [...prevItems, newWishlistItem]);
     }
 
@@ -88,6 +93,7 @@ const Router = () => {
         const checkItemExists = wishlist.find(wishlistELement => wishlistELement.id === itemID);
         if(checkItemExists) {
             const newWishlist = wishlist.filter(element => element.id !== checkItemExists.id);
+            setWishlistCount(prevWishlistCount => prevWishlistCount - 1);
             setWishlist([...newWishlist]);
         } else {
             console.log("Element is not there in the wishlist");
@@ -122,21 +128,21 @@ const Router = () => {
     const router = createBrowserRouter([
         {
             path : "/",
-            element : <Home />,
-            errorElement : <ErrorElement />
+            element : <Home cartCount={cartCount} wishlistCount={wishlistCount}/>,
+            errorElement : <ErrorElement cartCount={cartCount} wishlistCount={wishlistCount}/>
         },
         {
             path : "products/",
-            element : <Products products={products} addToCart={addToCart} addToWishlist={addToWishlist}/>
+            element : <Products products={products} addToCart={addToCart} addToWishlist={addToWishlist} cartCount={cartCount} wishlistCount={wishlistCount}/>
         },
         {
             path : "cart/",
-            element : <Cart cart={cart} removeFromCart={removeFromCart} changeQuantityInCart={changeQuantityInCart}/>
+            element : <Cart cart={cart} removeFromCart={removeFromCart} changeQuantityInCart={changeQuantityInCart} cartCount={cartCount} wishlistCount={wishlistCount}/>
         },
         {
             path : "wishlist/",
-            element : <Wishlist wishlist={wishlist} removeFromWishlist={removeFromWishlist}/>
-        }
+            element : <Wishlist wishlist={wishlist} removeFromWishlist={removeFromWishlist} cartCount={cartCount} wishlistCount={wishlistCount}/>
+        },
     ]);
 
     return (

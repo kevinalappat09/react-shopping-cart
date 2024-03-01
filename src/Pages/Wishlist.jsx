@@ -1,10 +1,10 @@
 import PropTypes from "prop-types";
 import Nav from "../Nav";
 
-const Wishlist = ({wishlist, removeFromWishlist}) => {
+const Wishlist = ({wishlist, removeFromWishlist, cartCount, wishlistCount}) => {
     return (
         <div className="wishlist">
-            <Nav />
+            <Nav cartCount={cartCount} wishlistCount={wishlistCount}/>
             {wishlist.map(element => (
                 <div className="" key={element.id}>
                     {element.title}
@@ -19,5 +19,7 @@ export default Wishlist;
 
 Wishlist.propTypes = {
     wishlist : PropTypes.array,
-    removeFromWishlist : PropTypes.func
+    removeFromWishlist : PropTypes.func,
+    cartCount : PropTypes.number,
+    wishlistCount : PropTypes.number
 }

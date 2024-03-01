@@ -4,7 +4,7 @@ import ProductSpecification from "./ProductSpecification";
 
 import Nav from "../Nav";
 
-const Products = ({products, addToCart, addToWishlist}) => {
+const Products = ({products, addToCart, addToWishlist, cartCount, wishlistCount}) => {
     const [currentProducts, setCurrentProducts] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [productsPerPage] = useState(5);
@@ -130,7 +130,7 @@ const Products = ({products, addToCart, addToWishlist}) => {
 
     return (
         <div className="products">
-            <Nav />
+            <Nav cartCount={cartCount} wishlistCount={wishlistCount}/>
 
             <button onClick={switchMensClothingFilter}>Add mens clothing filter</button>
             <button onClick={switchWomensClothingFitler}>Add womens clothing filter</button>
@@ -164,5 +164,7 @@ export default Products;
 Products.propTypes = {
     products : PropTypes.array,
     addToCart : PropTypes.func,
-    addToWishlist : PropTypes.func
+    addToWishlist : PropTypes.func,
+    cartCount : PropTypes.number,
+    wishlistCount : PropTypes.number
 };

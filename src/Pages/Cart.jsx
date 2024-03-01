@@ -1,12 +1,12 @@
 import PropTypes from "prop-types"
 import Nav from "../Nav";
 
-const Cart = ({cart, removeFromCart, changeQuantityInCart}) => {
+const Cart = ({cart, removeFromCart, changeQuantityInCart, cartCount, wishlistCount}) => {
 
     console.log(cart);
     return (
         <div className="cart">
-            <Nav />
+            <Nav cartCount={cartCount} wishlistCount={wishlistCount}/>
             {cart.map(cartItem => (
                 <div className="" key={cartItem.id}>
                     {cartItem.title} || 
@@ -26,5 +26,7 @@ export default Cart;
 Cart.propTypes = {
     cart : PropTypes.array,
     removeFromCart : PropTypes.func,
-    changeQuantityInCart : PropTypes.func
+    changeQuantityInCart : PropTypes.func,
+    cartCount : PropTypes.number,
+    wishlistCount : PropTypes.number
 };
