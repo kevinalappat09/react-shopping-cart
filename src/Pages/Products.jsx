@@ -2,14 +2,17 @@ import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import ProductSpecification from "./ProductSpecification";
 
+import Checkbox from "../Components/Checkbox";
+
 import Nav from "../Nav";
 
 import "../styles/Products.css"
+import Cart from "../Components/Card";
 
 const Products = ({products, addToCart, addToWishlist, cartCount, wishlistCount}) => {
     const [currentProducts, setCurrentProducts] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const [productsPerPage] = useState(5);
+    const [productsPerPage] = useState(12);
     const [maxProducts, setMaxProducts] = useState();
 
     
@@ -86,7 +89,7 @@ const Products = ({products, addToCart, addToWishlist, cartCount, wishlistCount}
                 const sortedProducts = unsortedProducts.sort((a, b) => a.price - b.price);
                 return sortedProducts;
             } else {
-                return unsortedElements
+                return unsortedElements;
             }
         }
 
@@ -135,39 +138,76 @@ const Products = ({products, addToCart, addToWishlist, cartCount, wishlistCount}
             <Nav cartCount={cartCount} wishlistCount={wishlistCount}/>  
             <main className="products">
                 <div className="sidebar">
-
-                </div>
-                <div className="top-filter-tray">
-
-                </div>
-                <div className="product-display-container">
-
-                </div>
-
-                
-
-                <button onClick={switchMensClothingFilter}>Add mens clothing filter</button>
-                <button onClick={switchWomensClothingFitler}>Add womens clothing filter</button>
-                <button onClick={switchJewelleryFilter}>Add jewellery filter</button>
-                <button onClick={switchElectronicsFilter}>Add electronics filter</button>
-                <button onClick={switchSortHighToLow}>Add sort high to low</button>
-                <button onClick={switchSortLowToHigh}>Add sort low to high</button>
-
-                <ProductSpecification product={productToSpecify} modalOpen={productSpecificationModalOpen} setModalClose={closeProduct}/> 
-
-                {currentProducts.map(element => (
-                    <div key={element.id}> 
-                        Name : {element.title} ||
-                        Category : {element.category} ||
-                        Price : {element.price} ||
-                        <button onClick={() => addToCart(element)}>Add to cart</button>
-                        <button onClick={() => addToWishlist(element)}>Add to wishlist</button>
-                        <button onClick={() => openProduct(element)}>Get details</button>
+                    <div className="tag-filter-container">
+                        <h1 className="typo-heading-3">Filters</h1>
+                        <div className="tag-filter">
+                            <Checkbox changeToRun={switchMensClothingFilter} labelText={"Men's Clothing"} name={"mens-filter-check"} />
+                            <Checkbox changeToRun={switchWomensClothingFitler} labelText={"Women's Clothing"} name={"womens-filter-check"} />
+                            <Checkbox changeToRun={switchJewelleryFilter} labelText={"Jewellery"} name={"jewellery-filter-check"} />
+                            <Checkbox changeToRun={switchElectronicsFilter} labelText={"Electronics"} name={"electronics-filter-check"} />
+                        </div>
                     </div>
-                ))}
-
-                <button onClick={prevPage} disabled={currentPage === 1}>Previous Page</button>
-                <button onClick={nextPage} disabled={currentPage * productsPerPage > maxProducts-1}>Next Page</button>
+                    <div className="sort-container">
+                        <h1 className="typo-heading-3">Sort</h1>
+                        <div className="sort">
+                            <p className="typo-para-regular sort-selector" onClick={switchSortHighToLow}>Sort Price High To Low</p>
+                            <p className="typo-para-regular sort-selector" onClick={switchSortLowToHigh}>Sort Price Low To High</p>
+                        </div>
+                    </div>
+                </div>
+                <div className="center">
+                    <div className="top-filter-tray">
+                        <div className="tag-filter-container">
+                            <div className="top-tag-filter">
+                                <Checkbox changeToRun={switchMensClothingFilter} labelText={"Men's Clothing"} name={"mens-filter-check"} />
+                                <Checkbox changeToRun={switchWomensClothingFitler} labelText={"Women's Clothing"} name={"womens-filter-check"} />
+                                <Checkbox changeToRun={switchJewelleryFilter} labelText={"Jewellery"} name={"jewellery-filter-check"} />
+                                <Checkbox changeToRun={switchElectronicsFilter} labelText={"Electronics"} name={"electronics-filter-check"} />
+                            </div>
+                        </div>
+                        <div className="sort-container">
+                            <div className="top-sort">
+                                <p className="typo-para-regular sort-selector" onClick={switchSortHighToLow}>Sort Price High To Low</p>
+                                <p className="typo-para-regular sort-selector" onClick={switchSortLowToHigh}>Sort Price Low To High</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="product-display-container">
+                        <ProductSpecification product={productToSpecify} modalOpen={productSpecificationModalOpen} setModalClose={closeProduct} addToCart={addToCart}/> 
+                        <div className="products-paginated">
+                            {currentProducts.map(element => (
+                                <Cart 
+                                    element={element} 
+                                    key={element.id} 
+                                    addToCart={addToCart} 
+                                    addToWishlist={addToWishlist}
+                                    openProduct={openProduct}
+                                />
+                            ))}
+                        </div>
+                        <div className="pagination-container">
+                            {currentPage === 1 ? 
+                                <button onClick={prevPage} className="pagination-btn disappear">
+                                    <span className="typo-medium">{currentPage - 1}</span>
+                                </button>
+                                :
+                                <button onClick={prevPage} className="pagination-btn"><span className="typo-medium">{currentPage - 1}</span></button>
+                            }
+                            <span className="typo-para-bold">
+                                {currentPage}
+                            </span>
+                            {currentPage * productsPerPage > maxProducts-1 ?
+                                <button onClick={nextPage} className="pagination-btn disappear">
+                                    <span className="typo-medium">{currentPage+1}</span>
+                                </button>
+                                :
+                                <button onClick={nextPage} className="pagination-btn">
+                                    <span className="typo-medium">{currentPage+1}</span>
+                                </button>
+                            }
+                        </div>
+                    </div>
+                </div>
                 
             </main>
         </>
