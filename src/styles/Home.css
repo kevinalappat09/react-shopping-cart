@@ -1,0 +1,60 @@
+.home-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4rem;
+
+    padding: 3rem;
+}
+
+.home-product-link {
+    text-decoration: none;
+}
+
+.home-product {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 1rem;
+
+    padding: 32px;
+
+    transition: transform 400ms;
+}
+
+.home-product:hover {
+    transform: translateY(-5px);
+}
+
+.home-product-image {
+    background-size: cover;
+    width: 50vw;
+    height: 60vh;
+    background-color: #71717a;
+    background-blend-mode: multiply;
+}
+
+.home-product-heading {
+    color: #fafafa;
+}
+
+.home-product-desc {
+    color: #fafafa;
+}
+
+#product-1 {
+    background-image: url("../assets/mens_clothing.jpg");
+}
+
+#product-2 {
+    background-image: url("../assets/Women-Apparel.jpg");
+}
+
+#product-3 {
+    background-image: url("../assets/electronics.jpg");
+}
+
+#product-4 {
+    background-image: url("../assets/jewelry.jpg");
+}

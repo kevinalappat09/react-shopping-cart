@@ -11,6 +11,23 @@ body {
     margin: 0;
 }
 
+/* .simple-btn {
+    width: 100%;
+    padding: 12px; 
+    border: 2px solid var(--accent);
+    border-radius: 8px;
+    color: var(--accent);
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.simple-btn:hover {
+    background-color: var(--accent);
+    color: var(--primary-background);
+    border: none;
+} */
+
 .typo-heading-1 {
     font-family: "Kanit", sans-serif;
     font-weight: 600;

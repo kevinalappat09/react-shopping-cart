@@ -5,7 +5,6 @@ import Products from "./Pages/Products";
 import Cart from "./Pages/Cart";
 import Wishlist from "./Pages/Wishlist";
 import ErrorElement from "./Pages/ErrorElement";
-import Nav from "./Nav";
 
 import { useEffect, useState } from "react";
 
