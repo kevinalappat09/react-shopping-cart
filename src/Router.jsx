@@ -1,10 +1,9 @@
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { HashRouter, Routes, Route } from "react-router-dom";
 
 import Home from "./Pages/Home";
 import Products from "./Pages/Products";
 import Cart from "./Pages/Cart";
 import Wishlist from "./Pages/Wishlist";
-import ErrorElement from "./Pages/ErrorElement";
 
 import { useEffect, useState } from "react";
 
@@ -124,28 +123,47 @@ const Router = () => {
         };
     }, []);
 
-    const router = createBrowserRouter([
-        {
-            path : "/",
-            element : <Home cartCount={cartCount} wishlistCount={wishlistCount}/>,
-            errorElement : <ErrorElement cartCount={cartCount} wishlistCount={wishlistCount}/>
-        },
-        {
-            path : "products/",
-            element : <Products products={products} addToCart={addToCart} addToWishlist={addToWishlist} cartCount={cartCount} wishlistCount={wishlistCount}/>
-        },
-        {
-            path : "cart/",
-            element : <Cart cart={cart} removeFromCart={removeFromCart} changeQuantityInCart={changeQuantityInCart} cartCount={cartCount} wishlistCount={wishlistCount}/>
-        },
-        {
-            path : "wishlist/",
-            element : <Wishlist wishlist={wishlist} removeFromWishlist={removeFromWishlist} cartCount={cartCount} wishlistCount={wishlistCount}/>
-        },
-    ]);
+    // const router = createBrowserRouter([
+    //     {
+    //         path : "/",
+    //         element : <Home cartCount={cartCount} wishlistCount={wishlistCount}/>,
+    //         errorElement : <ErrorElement cartCount={cartCount} wishlistCount={wishlistCount}/>
+    //     },
+    //     {
+    //         path : "products/",
+    //         element : <Products products={products} addToCart={addToCart} addToWishlist={addToWishlist} cartCount={cartCount} wishlistCount={wishlistCount}/>
+    //     },
+    //     {
+    //         path : "cart/",
+    //         element : <Cart cart={cart} removeFromCart={removeFromCart} changeQuantityInCart={changeQuantityInCart} cartCount={cartCount} wishlistCount={wishlistCount}/>
+    //     },
+    //     {
+    //         path : "wishlist/",
+    //         element : <Wishlist wishlist={wishlist} removeFromWishlist={removeFromWishlist} cartCount={cartCount} wishlistCount={wishlistCount}/>
+    //     },
+    // ]);
 
     return (
-        <RouterProvider router={router} />
+        <HashRouter>
+            <Routes>
+                <Route 
+                    path="/" 
+                    element={<Home cartCount={cartCount} wishlistCount={wishlistCount}/>}
+                />
+                <Route 
+                    path="/products/" 
+                    element={<Products products={products} addToCart={addToCart} addToWishlist={addToWishlist} cartCount={cartCount} wishlistCount={wishlistCount}/>} 
+                />
+                <Route 
+                    path="/cart/" 
+                    element={<Cart cart={cart} removeFromCart={removeFromCart} changeQuantityInCart={changeQuantityInCart} cartCount={cartCount} wishlistCount={wishlistCount}/>} 
+                />
+                <Route 
+                    path="/wishlist/" 
+                    element={<Wishlist wishlist={wishlist} removeFromWishlist={removeFromWishlist} cartCount={cartCount} wishlistCount={wishlistCount}/>} 
+                />
+            </Routes>
+        </HashRouter>
     )
 }
 
